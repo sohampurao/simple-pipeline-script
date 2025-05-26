@@ -1,39 +1,28 @@
 pipeline {
-    agent any  
+    agent any
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/yourusername/my-java-app.git'  
+                checkout scm  // Checks out code from SCM
             }
         }
         stage('Build') {
             steps {
-                sh 'mvn clean package'  // For Maven projects  
+                sh 'echo "Building the project..."'  // Replace with build commands
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'  
-                junit '**/target/surefire-reports/*.xml'  // Publish test results  
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'echo "Deploying to staging..."'  
-                // Add deployment commands (e.g., scp, Ansible, Docker)  
+                sh 'echo "Running tests..."'  // Replace with test commands
             }
         }
     }
     post {
         success {
-            mail to: 'team@example.com',  
-                 subject: 'Build Success',  
-                 body: 'The build succeeded!'  
+            echo 'Pipeline succeeded!'
         }
         failure {
-            mail to: 'team@example.com',  
-                 subject: 'Build Failed',  
-                 body: 'The build failed. Check Jenkins!'  
+            echo 'Pipeline failed!'
         }
     }
 }
